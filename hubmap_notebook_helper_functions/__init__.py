@@ -123,7 +123,7 @@ def get_donor_property(prop, donor_metadata):
   for attribute in donor_metadata:
     if attribute['grouping_concept_preferred_term'] == prop:
       if prop in ['Age', 'Body mass index']:
-        return attribute['data_value']
+        return float(attribute['data_value'])
       elif prop in ['Sex', 'Race', 'Blood type']:
         return attribute['preferred_term']
 
