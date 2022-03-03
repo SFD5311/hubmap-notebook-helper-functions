@@ -18,7 +18,7 @@ setup(
     ],
     packages=find_packages(),
     install_requires=[
-        'hubmap_api_py_client'
+        'hubmap_api_py_client',
         'matplotlib',
         'pandas',
         'requests>=2.22.0',
