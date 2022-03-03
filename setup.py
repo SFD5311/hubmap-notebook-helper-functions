@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='hubmap_notebook_helper_functions',
-    version='0.1.0',
+    version='0.1.1',
     description='Utilities for using HuBMAP APIs and visualizing their data in Jupyter notebooks',
     url='https://github.com/hubmapconsortium/cross-dataset-common',
     author='Sean Donahue',
