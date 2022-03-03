@@ -180,3 +180,5 @@ def get_coexpression_scatterplot(values_df, gene_one, gene_two):
 def get_comparison_histogram(values_df, gene_symbol, hue):
     sns.histplot(data=values_df, x=gene_symbol, hue=hue, log_scale=(False, True))
 
+def make_histogram(metadata_df, x, binwidth=10):
+    sns.histplot(data=metadata_df, x=x, binwidth=binwidth)
