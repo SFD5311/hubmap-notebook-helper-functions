@@ -141,8 +141,10 @@ def get_metadata_df(dataset_uuids):
 
 def get_barplot_by_column(dataframe, x, y=None):
     if y:
+        print(y)
         sns.barplot(data=dataframe, x=x, y=y)
     else:
+        print("No y, making countplot")
         sns.countplot(data=dataframe, x=x)
 
 def get_dataset_comparison_dataframe(dataset_one, dataset_two, gene_symbol):
