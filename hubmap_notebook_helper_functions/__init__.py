@@ -141,7 +141,7 @@ def get_metadata_df(dataset_uuids):
 
 def get_barplot_by_column(dataframe, x, y=None):
     if y:
-        sns.countplot(data=dataframe, x=x, y=y)
+        sns.barplot(data=dataframe, x=x, y=y)
     else:
         sns.countplot(data=dataframe, x=x)
 
