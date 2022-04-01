@@ -182,3 +182,53 @@ def get_comparison_histogram(values_df, gene_symbol, hue):
 
 def make_histogram(metadata_df, x, binwidth=10):
     sns.histplot(data=metadata_df, x=x, binwidth=binwidth)
+
+def get_dataset_comparison_table(dataset_one, dataset_two, gene_symbol):
+    dataset_one_cells = client.select_cells(where="dataset", has=[dataset_one])
+    dataset_two_cells = client.select_cells(where="dataset", has=[dataset_two])
+    dataset_cells_list = list(dataset_one_cells.get_list(values_included=[gene_symbol])) + list(
+        dataset_two_cells.get_list(values_included=[gene_symbol]))
+    values_list = [cell['values'] for cell in dataset_cells_list]
+    for i in range(len(values_list)):
+        values_list[i]['dataset'] = dataset_cells_list[i]['dataset']
+    values_df = pd.DataFrame(values_list)
+    return values_df
+
+def get_organ_comparison_table(metadata_table, organ_one, organ_two, gene_symbol):
+    organ_one_datasets = get_datasets_by_organ(metadata_table, organ_one, modality="rna")
+    organ_two_datasets = get_datasets_by_organ(metadata_table, organ_two, modality="rna")
+    # These steps involve bulk retrieval of many datasets, so they take a long time
+    dataset_uuids = organ_one_datasets + organ_two_datasets
+    dataset_cells_list = []
+    for dataset in dataset_uuids:
+        dataset_cells = client.select_cells(where="dataset", has=[dataset])
+        dataset_cells_list.extend(list(dataset_cells.get_list(values_included=[gene_symbol])))
+    values_list = [cell['values'] for cell in dataset_cells_list]
+    for i in range(len(values_list)):
+        values_list[i]['organ'] = dataset_cells_list[i]['organ']
+    values_df = pd.DataFrame(values_list)
+    return values_df
+
+def get_metadata_table_by_cells(metadata_table, attribute):
+  cell_count_dict = {value:0 for value in metadata_table[attribute].unique()}
+  for value in metadata_table[attribute].unique():
+    attribute_df = metadata_table[metadata_table[attribute] == value]
+    cell_count_dict[value] += attribute_df['num_cells'].sum()
+  records = [{attribute:value, 'num_cells':cell_count_dict[value]} for value in cell_count_dict]
+  return pd.DataFrame(records)
+
+def get_metadata_table_binned(metadata_table, attribute, bin_size, by_cells=False):
+  cell_count_dict = {value:0 for value in metadata_table[attribute].unique()}
+  for value in metadata_table[attribute].unique():
+    attribute_df = metadata_table[metadata_table[attribute] == value]
+    cell_count_dict[value] += attribute_df['num_cells'].sum()
+  records = [{attribute:value, 'num_cells':cell_count_dict[value]} for value in cell_count_dict]
+  return pd.DataFrame(records)
+
+def filter_table_by_modality(metadata_table, modality):
+  modality_datasets = [dataset["uuid"] for dataset in list(client.select_datasets(where="modality", has = [modality]).get_list())]
+  return metadata_table[metadata_table["dataset"].isin(modality_datasets)]
+
+def get_metadata_table(dataset_uuids):
+  records = [get_metadata_record(uuid) for uuid in dataset_uuids]
+  return pd.DataFrame(records)
