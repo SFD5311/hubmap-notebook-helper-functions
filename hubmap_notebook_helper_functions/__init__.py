@@ -112,7 +112,6 @@ def get_donor_metadata(dataset_uuid):
           donor_metadata_dict = {prop:get_donor_property(prop, organ_donor_data) for prop in properties}
         except:
           donor_metadata_dict = {}
-          print(f"No organ donor data found for uuid {dataset_uuid}")
         return donor_metadata_dict
 
   return donor_metadata_dict
