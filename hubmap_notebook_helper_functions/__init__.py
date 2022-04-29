@@ -40,7 +40,7 @@ def get_datasets_by_organ(metadata_df, organ, modality = None):
   return list(organ_df["dataset"].unique())
 
 def get_full_organ_name(abbreviation):
-  organs_dict = {'HT':'Heart', "LK":"Kidney",'RK':"Kidney", "LI":"Large Intestine", "LV":"Liver", "RL":"Lung", "LL":"Lung", "PA":"Pancreas","LY":"Lymph Node", "SP":"Spleen", "TH":"Thymus"}
+  organs_dict = {'HT':'Heart', 'SI': 'Small Intestine', "LK":"Kidney",'RK':"Kidney", "LI":"Large Intestine", "LV":"Liver", "RL":"Lung", "LL":"Lung", "PA":"Pancreas","LY":"Lymph Node", "SP":"Spleen", "TH":"Thymus"}
   return organs_dict[abbreviation]
 
 def get_dataset_json(dataset):
