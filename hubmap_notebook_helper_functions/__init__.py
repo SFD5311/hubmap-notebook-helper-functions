@@ -133,7 +133,8 @@ def get_donor_property(prop, donor_metadata):
 def get_metadata_record(dataset_uuid):
   dataset_cells = client.select_cells(where="dataset", has=[dataset_uuid])
   dataset_clusters = client.select_clusters(where="dataset", has=[dataset_uuid])
-  metadata_dict = {"dataset":dataset_uuid, "num_cells":len(dataset_cells), "num_cluster":len(dataset_clusters)}
+  portal_url = get_portal_url(dataset_uuid)
+  metadata_dict = {"dataset":dataset_uuid, "portal_url":portal_url, "num_cells":len(dataset_cells), "num_cluster":len(dataset_clusters)}
   metadata_dict.update(get_sample_metadata(dataset_uuid))
   metadata_dict.update(get_donor_metadata(dataset_uuid))
   return metadata_dict
