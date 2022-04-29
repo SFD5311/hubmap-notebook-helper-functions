@@ -291,3 +291,6 @@ def get_function_help_text(function):
       return "No documentation available for that function"
   else:
       return documentation_dict[function]
+
+def get_portal_url(uuid):
+  return f"https://portal.hubmapconsortium.org/browse/dataset/{uuid}/"
