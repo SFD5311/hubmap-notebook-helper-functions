@@ -245,6 +245,9 @@ def get_distinct_values_for_attribute(metadata_table, attribute):
 def select_from_table_by_metadata_value(metadata_table, attribute, value):
   return metadata_table[metadata_table[attribute] == value]
 
+def get_portal_url(uuid):
+  return f"https://portal.hubmapconsortium.org/browse/dataset/{uuid}/"
+
 documentation_dict = {get_metadata_table:"""def get_metadata_table()
   This function doesn't take any inputs
   It returns a table with sample and donor metadata for each dataset in the Cells API index""",
@@ -284,13 +287,13 @@ documentation_dict = {get_metadata_table:"""def get_metadata_table()
 
   select_from_table_by_metadata_value:"""def select_from_metadata_table_by_value():
   This function takes a metadata table, a metadata attribute, and a value for that attribute and returns the subset of the table
-  Where that attribute matches that value, i.e. where donor sex = Female"""}
+  Where that attribute matches that value, i.e. where donor sex = Female""",
+
+  get_portal_url:"""def get_portal_url():
+  This function takes a dataset uuid and returns a url to view that dataet in the HuBMAP data portal"""}
 
 def get_function_help_text(function):
   if function not in documentation_dict:
       return "No documentation available for that function"
   else:
       return documentation_dict[function]
-
-def get_portal_url(uuid):
-  return f"https://portal.hubmapconsortium.org/browse/dataset/{uuid}/"
