@@ -108,8 +108,12 @@ def get_donor_metadata(dataset_uuid):
       donor_metadata_dict = {}
       if 'lab_donor_id' in ancestor.keys():
         try:
-          organ_donor_data = ancestor['metadata']['organ_donor_data']
-          donor_metadata_dict = {prop:get_donor_property(prop, organ_donor_data) for prop in properties}
+          if 'metadata' in ancestor.keys():
+            if 'organ_donor_data' in ancestor['metadata'].keys():
+              organ_donor_data = ancestor['metadata']['organ_donor_data']
+            else:
+              organ_donor_data = ancestor['metadata']['living_donor_data']
+            donor_metadata_dict = {prop:get_donor_property(prop, organ_donor_data) for prop in properties}
         except:
           donor_metadata_dict = {}
         return donor_metadata_dict
