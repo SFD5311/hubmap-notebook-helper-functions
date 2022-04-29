@@ -231,3 +231,59 @@ def filter_table_by_modality(metadata_table, modality):
 def get_metadata_table(dataset_uuids):
   records = [get_metadata_record(uuid) for uuid in dataset_uuids]
   return pd.DataFrame(records)
+
+def get_metadata_attributes(metadata_table):
+  return list(metadata_table.columns)
+
+def get_distinct_values_for_attribute(metadata_table, attribute):
+  return list(metadata_table[attribute].unique())
+
+def select_from_table_by_metadata_value(metadata_table, attribute, value):
+  return metadata_table[metadata_table[attribute] == value]
+
+documentation_dict = {get_metadata_table:"""def get_metadata_table()
+  This function doesn't take any inputs
+  It returns a table with sample and donor metadata for each dataset in the Cells API index""",
+  
+  get_metadata_table_by_cells:"""def get_metadata_table_by_cells(metadata_table)
+  This function takes a metadata table as input
+  It returns the table with counts by cells instead of by datasets""",
+  
+  get_barplot_by_column:"""def get_barplot_by_column()
+  This function takes a metadata table as input, along with x and y axis labels for a barplot
+  It outputs a barplot""",
+  
+  get_coexpression_scatterplot:"""def get_coexpression_scatterplot()
+  This function takes a table of cells as input, along with identifiers for two genes whose expression to compare
+  It outputs a scatterplot""",
+
+  get_comparison_histogram:"""def get_comparison_histogram()
+  This function takes a table of cells, along with a gene identifier and the name of the attribute to color by
+  It produces a histogram comparing the expression of a certain gene across two or more groups of cells, colored by group""",
+
+  get_organ_comparison_table:"""def get_organ_comparison_table()
+  This function takes the identifiers for two organ and a gene and returns a table of cells from those datasets with expression
+  values for that gene""",
+
+  get_dataset_comparison_table: """def get_dataset_comparison_table()
+  This function takes the identifiers for two datasets and a gene and returns a table of cells from those datasets with expression
+  values for that gene""",
+
+  get_datasets_by_organ: """def get_datasets_by_organ()
+  This function takes an identifier for an organ and returns a list of identifiers for datasets associated with that organ""",
+
+  get_metadata_attributes:"""def get_metadata_attributes(metadata_table)
+  This function takes a metadata table and displays all the donor, sample, and dataset metadata attributes available""",
+
+  get_distinct_values_for_attribute:"""def get_distinct_values_for_attribute()
+  This function takes a metadata table and a metadata attribute and returns all the distinct values for that attribute in that table""",
+
+  select_from_table_by_metadata_value:"""def select_from_metadata_table_by_value():
+  This function takes a metadata table, a metadata attribute, and a value for that attribute and returns the subset of the table
+  Where that attribute matches that value, i.e. where donor sex = Female"""}
+
+def get_function_help_text(function):
+  if function not in documentation_dict:
+      return "No documentation available for that function"
+  else:
+      return documentation_dict[function]
