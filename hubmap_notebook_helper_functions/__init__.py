@@ -4,6 +4,8 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 
+csv_path = '/content/metadata_table.csv'
+
 api_endpoint = 'https://cells.api.hubmapconsortium.org/api/'
 client = Client(api_endpoint)
 
@@ -140,8 +142,12 @@ def get_metadata_record(dataset_uuid):
   return metadata_dict
 
 def get_metadata_df(dataset_uuids):
-  records = [get_metadata_record(uuid) for uuid in dataset_uuids]
-  return pd.DataFrame(records)
+  try:
+      df = pd.read_csv(csv_path)
+      return df[df["dataset"].isin(dataset_uuids)]
+  except:
+      records = [get_metadata_record(uuid) for uuid in dataset_uuids]
+      return pd.DataFrame(records)
 
 def get_barplot_by_column(dataframe, x, y=None):
     if y:
