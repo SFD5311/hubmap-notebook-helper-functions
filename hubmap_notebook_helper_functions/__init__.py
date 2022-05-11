@@ -170,6 +170,19 @@ def get_dataset_comparison_dataframe(dataset_one, dataset_two, gene_symbol):
     values_df = pd.DataFrame(values_list)
     return values_df
 
+def get_coexpression_table(dataset_cells, gene_symbol, gene_symbol_two):
+    dataset_cells_list_one = list(dataset_cells.get_list(values_included=[gene_symbol]))
+    dataset_cells_list_two = list(dataset_cells.get_list(values_included=[gene_symbol]))
+
+    values_list_one = [cell["values"][gene_symbol] for cell in dataset_cells_list_one]
+    values_list_two = [cell["values"][gene_symbol] for cell in dataset_cells_list_two]
+
+    df = pd.DataFrame()
+    df[gene_symbol] = pd.Series(values_list_one)
+    df[gene_symbol_two] = pd.Series(values_list_two)
+
+    return df
+
 def get_organ_comparison_dataframe(metadata_df, organ_one, organ_two, gene_symbol):
     organ_one_datasets = get_datasets_by_organ(metadata_df, organ_one, modality="rna")
     organ_two_datasets = get_datasets_by_organ(metadata_df, organ_two, modality="rna")
