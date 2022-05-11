@@ -145,7 +145,8 @@ def get_metadata_df(dataset_uuids):
   try:
       df = pd.read_csv(csv_path)
       return df[df["dataset"].isin(dataset_uuids)]
-  except:
+  except Exception as e:
+      print(str(e))
       records = [get_metadata_record(uuid) for uuid in dataset_uuids]
       return pd.DataFrame(records)
 
