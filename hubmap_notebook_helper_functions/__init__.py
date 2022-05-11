@@ -315,7 +315,11 @@ documentation_dict = {get_metadata_table:"""def get_metadata_table()
   Where that attribute matches that value, i.e. where donor sex = Female""",
 
   get_portal_url:"""def get_portal_url():
-  This function takes a dataset uuid and returns a url to view that dataet in the HuBMAP data portal"""}
+  This function takes a dataset uuid and returns a url to view that dataet in the HuBMAP data portal""",
+
+  get_coexpression_table:"""def get_coexpression_table()
+  This function takes a set of cells and a pair of gene symbols and returns a table containing the expression values
+  for each of those genes in each of the cells"""}
 
 def get_function_help_text(function):
   if function not in documentation_dict:
