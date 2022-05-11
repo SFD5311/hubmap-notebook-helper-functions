@@ -172,7 +172,7 @@ def get_dataset_comparison_dataframe(dataset_one, dataset_two, gene_symbol):
 
 def get_coexpression_table(dataset_cells, gene_symbol, gene_symbol_two):
     dataset_cells_list_one = list(dataset_cells.get_list(values_included=[gene_symbol]))
-    dataset_cells_list_two = list(dataset_cells.get_list(values_included=[gene_symbol]))
+    dataset_cells_list_two = list(dataset_cells.get_list(values_included=[gene_symbol_two]))
 
     values_list_one = [cell["values"][gene_symbol] for cell in dataset_cells_list_one]
     values_list_two = [cell["values"][gene_symbol] for cell in dataset_cells_list_two]
