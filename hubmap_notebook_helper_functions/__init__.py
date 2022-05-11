@@ -241,8 +241,12 @@ def filter_table_by_modality(metadata_table, modality):
   return metadata_table[metadata_table["dataset"].isin(modality_datasets)]
 
 def get_metadata_table(dataset_uuids):
-  records = [get_metadata_record(uuid) for uuid in dataset_uuids]
-  return pd.DataFrame(records)
+  try:
+      df = pd.read_csv(csv_path)
+      return df[df["dataset"].isin(dataset_uuids)]
+  except Exception as e:
+      records = [get_metadata_record(uuid) for uuid in dataset_uuids]
+      return pd.DataFrame(records)
 
 def get_metadata_attributes(metadata_table):
   return list(metadata_table.columns)
