@@ -175,7 +175,7 @@ def get_coexpression_table(dataset_cells, gene_symbol, gene_symbol_two):
     dataset_cells_list_two = list(dataset_cells.get_list(values_included=[gene_symbol_two]))
 
     values_list_one = [cell["values"][gene_symbol] for cell in dataset_cells_list_one]
-    values_list_two = [cell["values"][gene_symbol] for cell in dataset_cells_list_two]
+    values_list_two = [cell["values"][gene_symbol_two] for cell in dataset_cells_list_two]
 
     df = pd.DataFrame()
     df[gene_symbol] = pd.Series(values_list_one)
